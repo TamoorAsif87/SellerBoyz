@@ -1,0 +1,74 @@
+﻿@model ProductDto
+
+@{
+	ViewBag.Title = "Products";
+}
+
+<div class="container mx-auto m-5">
+	<div class="card p-4 m-5" style="max-width:600px;width:90vw;">
+		<div class="card-header">
+			<h3 class="card-title text-center">@(Model.Id == Guid.Empty ? "Create" : "Update") Product</h3>
+		</div>
+		<div class="card-body">
+
+			<div class="text-danger my-2" asp-validation-summary="All">
+			</div>
+
+			<form asp-area="admin" asp-controller="product" asp-action="upsert">
+
+				@if (Model.Id != Guid.Empty)
+				{
+					<input type="hidden" asp-for="Id" value="@Model.Id" />
+				}
+
+
+				<div class="mb-3 vstack">
+					<label class="text-light-emphasis">Product Name</label>
+					<input asp-for="Name" class="form-control" />
+					<span class="text-danger" asp-validation-for="Name"></span>
+				</div>
+
+				<div class="mb-3 vstack">
+					<label class="text-light-emphasis">Product Description</label>
+					<textarea asp-for="Description" class="form-control"></textarea>
+					<span class="text-danger" asp-validation-for="Description"></span>
+				</div>
+
+				<div class="mb-3 vstack">
+					<label class="text-light-emphasis">Product Price</label>
+					<input asp-for="Price" class="form-control" />
+					<span class="text-danger" asp-validation-for="Price"></span>
+				</div>
+
+				<div class="mb-3 vstack">
+					<label class="text-light-emphasis">Product Total Sold</label>
+					<input asp-for="TotalSold" class="form-control" />
+					<span class="text-danger" asp-validation-for="TotalSold"></span>
+				</div>
+
+				<div class="mb-3 vstack">
+					<label class="text-light-emphasis">Product In Inventory</label>
+					<input asp-for="InInventory" class="form-control" />
+					<span class="text-danger" asp-validation-for="InInventory"></span>
+				</div>
+
+
+				<div class="mb-3 vstack">
+					<label class="text-light-emphasis">Product In Inventory</label>
+					<select asp-for="ProductCollectionId" class="form-select" asp-items="@ViewBag.collectionsList"></select>
+				</div>
+
+
+				<button class="btn btn-success d-block w-75 mx-auto" type="submit">@(Model.Id == Guid.Empty ? "Create" : "Update") Product</button>
+
+			</form>
+		</div>
+	</div>
+</div>
+
+
+@section scripts {
+	<partial name="_ValidationScriptsPartial" />
+}
+
+

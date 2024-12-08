@@ -1,0 +1,32 @@
+﻿@model ProductDto
+
+@{
+	ViewBag.Title = "Products";
+}
+
+
+<div class="container m-5">
+	<div class="d-grid gap-4" style="grid-template-columns: repeat(3, 300px);">
+		
+		<div class="border-primary d-flex justify-content-center rounded-3" style="height:300px;width:300px;border:2px dashed;">
+
+			<form asp-controller="product" asp-action="AddProductImage" enctype="multipart/form-data">
+				<input type="hidden" name="productId" value="@Model.Id" />
+
+				<label class="d-flex justify-content-center align-items-center" style="width:300px;height:300px;cursor:pointer">
+					Upload Image <input type="file" name="file" class="d-none w-100 h-100" onchange="this.form.submit()"/>
+				</label>
+
+			</form>
+		</div>
+
+		@foreach (var img in Model.Images!)
+		{
+			<dvi class="position-relative" style="height:300px;">
+				<img class="d-block w-100 h-100 object-fit-cover rounded-3" src="@img"/>
+				<a asp-controller="product" asp-action="removeProductImage" asp-route-productId="@Model.Id" asp-route-img="@img" class="bg-danger text-white px-3 rounded-3 p-2 position-absolute top-0" style="right:0;">Remove</a>
+			</dvi>
+		}
+
+	</div>
+</div>
